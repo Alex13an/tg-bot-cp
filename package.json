@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run bot.ts"
+    "start": "bun run bot.ts",
+    "build": "rm -rf ./dist & bun build ./bot.ts --outdir dist"
   },
   "devDependencies": {
     "@types/bun": "latest"
