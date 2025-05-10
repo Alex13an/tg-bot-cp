@@ -38,9 +38,7 @@ bot.command("start", async (ctx) => {
       .resized()
       .oneTime()
   });
-});
-
-bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
+}); bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
   ctx.session.step = "awaiting_fio";
   const text = ctx.message?.text?.trim();
   const url = (text == subscription_variant_one) ? process.env.URL_PREMIUM : process.env.URL_NORMAL
@@ -100,4 +98,4 @@ bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
 //   }
 // });
 
-bot.start()
+export default bot

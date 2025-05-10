@@ -4,17 +4,19 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run bot.ts",
-    "build": "rm -rf ./dist & bun build ./bot.ts --outdir dist"
+    "start": "bun run server.ts",
+    "build": "rm -rf ./dist & bun build ./server.ts --outdir dist --target=bun"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/express": "^5.0.1"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
     "axios": "^1.9.0",
+    "express": "^5.1.0",
     "grammy": "^1.36.1"
   }
 }
