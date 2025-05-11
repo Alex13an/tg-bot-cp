@@ -22,13 +22,13 @@ this.pay = function (userData) {
       },
     ],
     taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
-    phone: userData.phone, //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
+    phone: `${userData.phone}`.substring(2),
   };
 
   const data = {
     //содержимое элемента data
     CloudPayments: {
-      phone: userData.phone,
+      phone: `${userData.phone}`.substring(2),
       CustomerReceipt: receipt, //чек для первого платежа
       recurrent: {
         interval: "Month",
@@ -43,14 +43,14 @@ this.pay = function (userData) {
     {
       // options
       publicId: "test_api_00000000000000000000002",
-      accountId: userData.phone,
+      accountId: userData.fio,
       invoiceId: userData.userId,
       description: subTitle,
       amount: subPrice,
       currency: "RUB",
       data: data,
       payer: {
-        phone: userData.phone,
+        phone: `${userData.phone}`.substring(2),
       },
     },
     {
