@@ -25,4 +25,9 @@ app.get("/api/user", (req, res, next) => {
   res.json(row);
 });
 
+app.post("/api/success", (req, res) => {
+  const { userId } = req.body
+  console.log('USERID', userId)
+})
+
 bot.start();

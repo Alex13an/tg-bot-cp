@@ -1,4 +1,6 @@
-this.pay = function () {
+this.pay = function (userData) {
+  const subPrice = userData.sub_type == 1 ? 2000.0 : 1500.0
+  const subTitle = userData.sub_type == 1 ? 'Подписка Безлимит' : 'Дневная карта'
   const widget = new cp.CloudPayments({
     yandexPaySupport: false,
     applePaySupport: false,
@@ -11,21 +13,20 @@ this.pay = function () {
     Items: [
       //товарные позиции
       {
-        label: "Наименование товара 3", //наименование товара
-        price: 300.0, //цена
-        quantity: 3.0, //количество
-        amount: 900.0, //сумма
+        label: subTitle, //наименование товара
+        price: subPrice, //цена
+        quantity: 1.0, //количество
+        amount: subPrice, //сумма
         vat: 20, //ставка НДС
         method: 0, // тег-1214 признак способа расчета - признак способа расчета
         object: 0, // тег-1212 признак предмета расчета - признак предмета товара, работы, услуги, платежа, выплаты, иного предмета расчета
       },
     ],
     taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
-    email: "user@example.com", //e-mail покупателя, если нужно отправить письмо с чеком
-    phone: "", //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
+    phone: userData.phone, //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
     isBso: false, //чек является бланком строгой отчетности
     amounts: {
-      electronic: 900.0, // Сумма оплаты электронными деньгами
+      electronic: subPrice, // Сумма оплаты электронными деньгами
       advancePayment: 0.0, // Сумма из предоплаты (зачетом аванса) (2 знака после запятой)
       credit: 0.0, // Сумма постоплатой(в кредит) (2 знака после запятой)
       provision: 0.0, // Сумма оплаты встречным предоставлением (сертификаты, др. мат.ценности) (2 знака после запятой)
@@ -49,11 +50,10 @@ this.pay = function () {
     {
       // options
       publicId: "test_api_00000000000000000000002",
-      accountId: "user@example.com",
-      description: "Оплата товаров в example.com",
-      amount: 123000,
+      accountId: userData.phone,
+      description: subTitle,
+      amount: subPrice,
       currency: "RUB",
-      invoiceId: 1234567,
       data: data,
     },
     {
@@ -82,7 +82,6 @@ this.pay = function () {
   fetch(`/api/user?id=${userId}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log("DATA", data);
-      pay();
+      pay({ ...data, userId });
     });
 })();
