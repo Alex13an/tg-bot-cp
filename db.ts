@@ -9,7 +9,8 @@ db.prepare(`
     fio TEXT,
     phone TEXT,
     status TEXT,
-    sub_type NUMBER
+    sub_type NUMBER,
+    sub_id TEXT
   )
 `).run()
 

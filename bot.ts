@@ -49,7 +49,7 @@ bot.command("start", async (ctx) => {
 
 bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
   const text = ctx.message?.text?.trim();
-  if (text == subscription_variant_one) {
+  if (text === subscription_variant_one) {
     ctx.session.type = 1
   } else {
     ctx.session.type = 2
@@ -59,18 +59,6 @@ bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
   await ctx.reply("Введите ваше ФИО:", {
     reply_markup: { remove_keyboard: true }
   });
-
-
-
-  // const text = ctx.message?.text?.trim();
-  // const type = (text == subscription_variant_one) ?
-  // const url = `${process.env.BASE_URL}` +
-  //
-  // const inlineKeyboard = new InlineKeyboard().url("Оплатить", url || 'Не удалось получить ссылку...')
-  //
-  // await ctx.reply(pay_message, {
-  //   reply_markup: inlineKeyboard
-  // })
 });
 
 bot.on("message:text", async (ctx) => {
