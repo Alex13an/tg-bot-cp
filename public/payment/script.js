@@ -19,24 +19,16 @@ this.pay = function (userData) {
         quantity: 1.0, //количество
         amount: subPrice, //сумма
         vat: 20, //ставка НДС
-        method: 0, // тег-1214 признак способа расчета - признак способа расчета
-        object: 0, // тег-1212 признак предмета расчета - признак предмета товара, работы, услуги, платежа, выплаты, иного предмета расчета
       },
     ],
     taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
     phone: userData.phone, //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
-    isBso: false, //чек является бланком строгой отчетности
-    amounts: {
-      electronic: subPrice, // Сумма оплаты электронными деньгами
-      advancePayment: 0.0, // Сумма из предоплаты (зачетом аванса) (2 знака после запятой)
-      credit: 0.0, // Сумма постоплатой(в кредит) (2 знака после запятой)
-      provision: 0.0, // Сумма оплаты встречным предоставлением (сертификаты, др. мат.ценности) (2 знака после запятой)
-    },
   };
 
   const data = {
     //содержимое элемента data
     CloudPayments: {
+      phone: userData.phone,
       CustomerReceipt: receipt, //чек для первого платежа
       recurrent: {
         interval: "Month",
@@ -52,6 +44,7 @@ this.pay = function (userData) {
       // options
       publicId: "test_api_00000000000000000000002",
       accountId: userData.phone,
+      invoiceId: userData.userId,
       description: subTitle,
       amount: subPrice,
       currency: "RUB",
