@@ -9,7 +9,7 @@ db.prepare(`
     fio TEXT,
     phone TEXT,
     status TEXT,
-    payment_type NUMBER
+    sub_type NUMBER
   )
 `).run()
 

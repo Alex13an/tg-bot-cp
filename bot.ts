@@ -48,10 +48,19 @@ bot.command("start", async (ctx) => {
 });
 
 bot.hears([subscription_variant_one, subscription_variant_two], async (ctx) => {
+  const text = ctx.message?.text?.trim();
+  if (text == subscription_variant_one) {
+    ctx.session.type = 1
+  } else {
+    ctx.session.type = 2
+  }
+
   ctx.session.step = "awaiting_fio";
   await ctx.reply("Введите ваше ФИО:", {
     reply_markup: { remove_keyboard: true }
   });
+
+
 
   // const text = ctx.message?.text?.trim();
   // const type = (text == subscription_variant_one) ?
@@ -88,11 +97,11 @@ bot.on("message:text", async (ctx) => {
     const userId = existing?.id || uuidv1();
 
     const insert = db.prepare(`
-      INSERT INTO users (id, chat_id, fio, phone)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO users (id, chat_id, fio, phone, sub_type)
+      VALUES (?, ?, ?, ?, ?)
       ON CONFLICT(chat_id) DO UPDATE SET fio=excluded.fio, phone=excluded.phone
     `);
-    insert.run(userId, ctx.chat.id, ctx.session.fio, ctx.session.phone);
+    insert.run(userId, ctx.chat.id, ctx.session.fio, ctx.session.phone, ctx.session.type);
 
     const url = `${process.env.BASE_URL}?token=${userId}`;
     const inlineKeyboard = new InlineKeyboard().url("Оплатить", url || 'Не удалось получить ссылку...')

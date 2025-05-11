@@ -74,12 +74,15 @@ this.pay = function () {
 };
 
 (function init() {
-  const query = new URLSearchParams(window.location.search);
+  const userId = new URLSearchParams(window.location.search).get("token");
+  if (!userId) {
+    return;
+  }
 
-  // Читаем параметры
-  const fio = query.get("fio");
-  const phone = query.get("phone");
-
-  console.log("PARTS", fio, phone);
-  pay();
+  fetch(`/api/user?id=${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("DATA", data);
+      pay();
+    });
 })();
