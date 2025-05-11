@@ -1,6 +1,7 @@
 this.pay = function (userData) {
-  const subPrice = userData.sub_type == 1 ? 2000.0 : 1500.0
-  const subTitle = userData.sub_type == 1 ? 'Подписка Безлимит' : 'Дневная карта'
+  const subPrice = userData.sub_type == 1 ? 2000.0 : 1500.0;
+  const subTitle =
+    userData.sub_type == 1 ? "Подписка Безлимит" : "Дневная карта";
   const widget = new cp.CloudPayments({
     yandexPaySupport: false,
     applePaySupport: false,
@@ -58,8 +59,13 @@ this.pay = function (userData) {
     },
     {
       onSuccess: function (options) {
-        // success
-        //действие при успешной оплате
+        fetch("/api/success", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: userData.userId }),
+        });
       },
       onFail: function (reason, options) {
         // fail
