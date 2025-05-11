@@ -56,6 +56,9 @@ this.pay = function (userData) {
       amount: subPrice,
       currency: "RUB",
       data: data,
+      payer: {
+        phone: userData.phone,
+      },
     },
     {
       onSuccess: function (options) {

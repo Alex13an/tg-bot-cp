@@ -47,6 +47,7 @@ app.post("/api/success", async (req, res) => {
 
 app.post('/api/cloudpayments/webhook', (req, res) => {
   const event = req.body;
+  console.log('WEBHOOK', req.body)
   const type = req.headers['x-content-type-event'] || ''; // CloudPayments может передавать тип события
 
   console.log('Получен webhook:', type, event);
