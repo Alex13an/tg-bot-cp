@@ -1,10 +1,12 @@
 import express from "express";
 import bot from "./bot";
 import db from "./db.js";
+import { massive_success } from "./messages";
 
 const app = express();
 const port = process.env.PORT || 3333;
 
+app.use(express.json());
 app.use(express.static("public"));
 
 app.listen(port, () => {
@@ -25,9 +27,21 @@ app.get("/api/user", (req, res, next) => {
   res.json(row);
 });
 
-app.post("/api/success", (req, res) => {
-  const { userId } = req.body
-  console.log('USERID', userId)
-})
+app.post("/api/success", async (req, res) => {
+  const { userId } = req.body;
+
+  const stmt = db.query("SELECT chat_id, fio, phone FROM users WHERE id = ?");
+  const user = stmt.get(userId);
+
+  try {
+    await bot.api.sendMessage(
+      user.chat_id,
+      massive_success,
+    );
+    return res.json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ error: "Failed to send message" });
+  }
+});
 
 bot.start();
