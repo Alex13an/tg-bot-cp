@@ -1,0 +1,4 @@
+.widget-box__close {
+  display: none !important;
+  background: red;
+}
