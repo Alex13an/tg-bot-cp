@@ -62,13 +62,13 @@ this.pay = function (userData) {
     },
     {
       onSuccess: function (options) {
-        fetch("/api/success", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: userData.userId }),
-        });
+        // fetch("/api/success", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({ userId: userData.userId }),
+        // });
       },
       onFail: function (reason, options) {
         // fail
