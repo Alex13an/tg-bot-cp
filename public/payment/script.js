@@ -1,5 +1,31 @@
 this.pay = function (userData) {
-  const subPrice = userData.sub_type == 1 ? 2000.0 : 1500.0;
+  let payPrice
+  let subPrice
+  let subInterval
+
+  switch(userData.sub_type) {
+    case 1:
+      payPrice = 4000.0
+      subPrice = 2000.0
+      subInterval = "Month"
+      break;
+    case 2:
+      payPrice = 3700.0
+      subPrice = 1700.0
+      subInterval = "Month"
+      break;
+    case 3:
+      payPrice = 2.0
+      subPrice = 1.0
+      subInterval = "Day"
+      break;
+    default:
+      payPrice = 1.0
+      subPrice = 1.0
+      subInterval = "Day"
+      break;
+  }
+
   const subTitle =
     userData.sub_type == 1 ? "Подписка Безлимит" : "Дневная карта";
   const widget = new cp.CloudPayments({
@@ -9,6 +35,21 @@ this.pay = function (userData) {
     masterPassSupport: false,
     tinkoffInstallmentSupport: false,
   });
+
+  const firstReceipt = {
+    Items: [
+      //товарные позиции
+      {
+        label: subTitle, //наименование товара
+        price: subPrice, //цена
+        quantity: 1.0, //количество
+        amount: payPrice, //сумма
+        vat: 20, //ставка НДС
+      },
+    ],
+    taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
+    phone: `${userData.phone}`,
+  };
 
   const receipt = {
     Items: [
@@ -22,16 +63,16 @@ this.pay = function (userData) {
       },
     ],
     taxationSystem: 0, //система налогообложения; необязательный, если у вас одна система налогообложения
-    phone: `${userData.phone}`.substring(2),
+    phone: `${userData.phone}`,
   };
 
   const data = {
     //содержимое элемента data
     CloudPayments: {
-      phone: `${userData.phone}`.substring(2),
-      CustomerReceipt: receipt, //чек для первого платежа
+      phone: `${userData.phone}`,
+      CustomerReceipt: firstReceipt, //чек для первого платежа
       recurrent: {
-        interval: "Month",
+        interval: subInterval,
         period: 1,
         customerReceipt: receipt, //чек для регулярных платежей
       },
@@ -46,11 +87,11 @@ this.pay = function (userData) {
       accountId: userData.fio,
       invoiceId: userData.userId,
       description: subTitle,
-      amount: subPrice,
+      amount: payPrice,
       currency: "RUB",
       data: data,
       payer: {
-        phone: `${userData.phone}`.substring(2),
+        phone: `${userData.phone}`,
       },
     },
     {
