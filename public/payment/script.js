@@ -73,6 +73,7 @@ this.pay = function (userData) {
       CustomerReceipt: firstReceipt, //чек для первого платежа
       recurrent: {
         interval: subInterval,
+        amount: subPrice,
         period: 1,
         customerReceipt: receipt, //чек для регулярных платежей
       },
