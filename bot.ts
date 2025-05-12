@@ -87,7 +87,7 @@ bot.on("message:text", async (ctx) => {
     const insert = db.prepare(`
       INSERT INTO users (id, chat_id, fio, phone, sub_type)
       VALUES (?, ?, ?, ?, ?)
-      ON CONFLICT(chat_id) DO UPDATE SET fio=excluded.fio, phone=excluded.phone
+      ON CONFLICT(chat_id) DO UPDATE SET fio=excluded.fio, phone=excluded.phone, sub_type=excluded.sub_type
     `);
     insert.run(
       userId,
