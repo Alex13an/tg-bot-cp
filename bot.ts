@@ -10,6 +10,7 @@ import {
   greet_message,
   get_pay_message,
   subscriptionVariants,
+  select_another,
 } from "./messages";
 import { v1 as uuidv1 } from "uuid";
 import db from "./db.js";
@@ -94,6 +95,9 @@ bot.hears(
         curent_variant.title,
         curent_variant.price
       );
+      await ctx.reply(`Тариф изменен на ${curent_variant.title}`, {
+        reply_markup: { remove_keyboard: true },
+      });
       await ctx.reply(pay_message, {
         reply_markup: inlineKeyboard,
       });
@@ -163,7 +167,7 @@ bot.callbackQuery("select_another", async (ctx) => {
   await ctx.answerCallbackQuery(); // убирает "часики"
   ctx.session.step = null;
   ctx.session.re = true;
-  await ctx.reply(greet_message, {
+  await ctx.reply(select_another, {
     reply_markup: new Keyboard()
       .oneTime()
       .text(subscriptionVariants[0].description)
