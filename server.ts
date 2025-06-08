@@ -1,7 +1,7 @@
 import express from "express";
 import bot from "./bot";
 import db from "./db.js";
-import { massive_success, subscriptionVariants } from "./messages";
+import { massive_success, subscriptionVariants, start_price } from "./messages";
 
 const app = express();
 const port = process.env.PORT || 3333;
@@ -29,10 +29,12 @@ app.get("/api/user", (req, res, next) => {
   }
 
   const type = row.sub_type || 1
-  const title = subscriptionVariants.find(v => v.id === type) || subscriptionVariants[0]
+  const subscription = subscriptionVariants.find(v => v.id === type) || subscriptionVariants[0]
   res.json({
     ...row,
-    title,
+    title: subscription.title,
+    price: subscription.price,
+    start_price,
   });
 });
 

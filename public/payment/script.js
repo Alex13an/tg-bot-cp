@@ -1,28 +1,8 @@
 this.pay = function (userData) {
-  let payPrice
-  let subPrice
-  let subInterval
-
-  switch(userData.sub_type) {
-    case 1:
-      payPrice = 3000.0
-      subPrice = 1300.0
-      subInterval = "Month"
-      break;
-    case 2:
-      payPrice = 3000.0
-      subPrice = 1700.0
-      subInterval = "Month"
-      break;
-    default:
-      payPrice = 3000.0
-      subPrice = 2400.0
-      subInterval = "Month"
-      break;
-  }
-
-  const subTitle =
-    userData.sub_type == 1 ? "Подписка Безлимит" : "Дневная карта";
+  const payPrice = userData.start_price
+  const subPrice = userData.price
+  const subInterval = "Month"
+  const subTitle = userData.title
   const widget = new cp.CloudPayments({
     yandexPaySupport: false,
     applePaySupport: false,

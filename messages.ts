@@ -16,8 +16,9 @@ export const pay_message: string = `
 Нажми на кнопку ниже, чтобы перейти к оплате через безопасную систему CloudPayments.
 `;
 
+export const start_price = 3000;
+
 export function get_pay_message(title: string, price: number) {
-  const start_price = 3000;
   return `
   📝 Вы выбрали тариф ${title} 
 
