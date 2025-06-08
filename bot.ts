@@ -101,7 +101,7 @@ bot.on("message:text", async (ctx) => {
       url || "Не удалось получить ссылку..."
     );
 
-    const curent_variant = subscriptionVariants[ctx.session.type]
+    const curent_variant = subscriptionVariants.find(v => v.id === ctx.session.type) || subscriptionVariants[0]
     const pay_message = get_pay_message(curent_variant.title, curent_variant.price)
     await ctx.reply(pay_message, {
       reply_markup: inlineKeyboard,
