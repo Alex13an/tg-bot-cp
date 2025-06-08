@@ -24,7 +24,7 @@ export const pay_message: string = `
 Нажми на кнопку ниже, чтобы перейти к оплате через безопасную систему CloudPayments.
 `;
 
-export const start_price = 1;
+export const start_price = 3000;
 
 export function get_pay_message(title: string, price: number) {
   return `
@@ -61,13 +61,6 @@ export const subscriptionVariants = [
     description: `ProFit  — 2400 ₽/мес
 Безлимит + групповые программы`,
     price: 2400,
-  },
-  {
-    id: 4,
-    title: "ProFit TEST",
-    description: `ProFit  — 1 ₽/мес
-Безлимит + групповые программы`,
-    price: 1,
   },
 ] as const;
 
