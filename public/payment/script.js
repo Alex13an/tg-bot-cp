@@ -1,5 +1,5 @@
 this.pay = function (userData) {
-  const payPrice = userData.start_price;
+  const payPrice = userData.start_price + userData.price;
   const subPrice = userData.price;
   const subInterval = "Month";
   const subTitle = `${userData.title} - ${userData.price} ₽/мес, Стартовый взнос - ${userData.start_price} ₽ (разово)`;
