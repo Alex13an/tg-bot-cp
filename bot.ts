@@ -41,6 +41,7 @@ bot.command("start", async (ctx) => {
       .text(subscriptionVariants[0].description)
       .text(subscriptionVariants[1].description)
       .text(subscriptionVariants[2].description)
+      .text(subscriptionVariants[3].description)
       .row()
       .toFlowed(1)
       .oneTime(),
