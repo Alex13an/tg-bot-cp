@@ -1,7 +1,7 @@
 import express from "express";
 import bot from "./bot";
 import db from "./db.js";
-import { massive_success } from "./messages";
+import { massive_success, subscriptionVariants } from "./messages";
 
 const app = express();
 const port = process.env.PORT || 3333;
@@ -28,7 +28,12 @@ app.get("/api/user", (req, res, next) => {
     return res.status(404).json({ error: "User not found" });
   }
 
-  res.json(row);
+  const type = row.sub_type || 1
+  const title = subscriptionVariants.find(v => v.id === type) || subscriptionVariants[0]
+  res.json({
+    ...row,
+    title,
+  });
 });
 
 app.post("/api/success", async (req, res) => {
