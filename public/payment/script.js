@@ -2,7 +2,7 @@ this.pay = function (userData) {
   const payPrice = userData.start_price
   const subPrice = userData.price
   const subInterval = "Month"
-  const subTitle = userData.title
+  const subTitle = `${userData.title} - ${userData.price} ₽/мес, Стартовый взнос - ${userData.start_price} ₽ (разово)`
   const widget = new cp.CloudPayments({
     yandexPaySupport: false,
     applePaySupport: false,
@@ -85,6 +85,7 @@ this.pay = function (userData) {
         //действие при неуспешной оплате
       },
       onComplete: function (paymentResult, options) {
+        console.log(paymentResult, options)
         //Вызывается как только виджет получает от api.cloudpayments ответ с результатом транзакции.
         //например вызов вашей аналитики Facebook Pixel
       },
