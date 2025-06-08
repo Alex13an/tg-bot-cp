@@ -5,24 +5,19 @@ this.pay = function (userData) {
 
   switch(userData.sub_type) {
     case 1:
-      payPrice = 4000.0
-      subPrice = 2000.0
+      payPrice = 3000.0
+      subPrice = 1300.0
       subInterval = "Month"
       break;
     case 2:
-      payPrice = 3700.0
+      payPrice = 3000.0
       subPrice = 1700.0
       subInterval = "Month"
       break;
-    case 3:
-      payPrice = 2.0
-      subPrice = 1.0
-      subInterval = "Day"
-      break;
     default:
-      payPrice = 1.0
-      subPrice = 1.0
-      subInterval = "Day"
+      payPrice = 3000.0
+      subPrice = 2400.0
+      subInterval = "Month"
       break;
   }
 
@@ -41,7 +36,7 @@ this.pay = function (userData) {
       //товарные позиции
       {
         label: subTitle, //наименование товара
-        price: subPrice, //цена
+        price: payPrice, //цена
         quantity: 1.0, //количество
         amount: payPrice, //сумма
         vat: 20, //ставка НДС

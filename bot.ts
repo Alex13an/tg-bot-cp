@@ -8,7 +8,7 @@ import {
 } from "grammy";
 import {
   greet_message,
-  pay_message,
+  get_pay_message,
   subscriptionVariants,
 } from "./messages";
 import { v1 as uuidv1 } from "uuid";
@@ -38,20 +38,18 @@ bot.command("start", async (ctx) => {
   await ctx.reply(greet_message, {
     reply_markup: new Keyboard()
       .oneTime()
-      .text(subscriptionVariants[0].title)
-      .text(subscriptionVariants[1].title)
-      .text(subscriptionVariants[2].title)
-      .text(subscriptionVariants[3].title)
+      .text(subscriptionVariants[0].description)
+      .text(subscriptionVariants[1].description)
+      .text(subscriptionVariants[2].description)
       .row()
-      .resized()
       .toFlowed(1)
       .oneTime(),
   });
 });
 
-bot.hears([...subscriptionVariants].map(s => s.title), async (ctx) => {
+bot.hears([...subscriptionVariants].map(s => s.description), async (ctx) => {
     const text = ctx.message?.text?.trim();
-    const type = subscriptionVariants.find(v => v.title === text)
+    const type = subscriptionVariants.find(v => v.description === text)
     ctx.session.type = type?.id || 1
 
     ctx.session.step = "awaiting_fio";
@@ -103,6 +101,8 @@ bot.on("message:text", async (ctx) => {
       url || "Не удалось получить ссылку..."
     );
 
+    const curent_variant = subscriptionVariants[ctx.session.type]
+    const pay_message = get_pay_message(curent_variant.title, curent_variant.price)
     await ctx.reply(pay_message, {
       reply_markup: inlineKeyboard,
     });
